@@ -12,11 +12,15 @@ var add_list_element;
 var update_list_elements;
 var ol;
 var generate_random_color;
-var active_li = null;0
-var lower_case_list = list_of_colors.map(function(value) {// new list with lower case only
+var active_li = null;
+var list_elements_array;
+var update_array_of_colors;
+var input2;
+var lower_case_list = list_of_colors.map(function(value) {
     return value.toLowerCase();
 });
-
+var old_color;
+var new_color;
 function attach_element(element_name){
     document.body.appendChild(
         document.createElement(element_name)
@@ -29,6 +33,10 @@ function random_color(){
                     )
             ];
 
+}
+function list_elements_array(){
+    list_elements_array = document.getElementsByTagName('li');
+    return list_elements_array;
 }
 function add_list_element(){
         current_list_element = document.createElement('li');
@@ -53,11 +61,51 @@ function update_list_elements(){
     this_list_element.addEventListener('dblclick', function () {
         this.remove();
     })
-}   
+}  
+ function read_code() {
+    add_list_element();
+    update_list_elements();
+    this_list_element = list_elements[(list_elements.length - 1)];
+    if (lower_case_list.indexOf(input1.value.toLowerCase()) > -1) {
+        this_list_element.textContent = list_of_colors[lower_case_list.indexOf(input1.value.toLowerCase())];
+
+    } else {
+        this_list_element.textContent = random_color();
+    }
+    this_list_element.style.backgroundColor = this_list_element.textContent;
+    this_list_element.addEventListener('dblclick', function () {
+        this.remove();
+    })
+} 
+ function update_code() {
+    update_array_of_colors = String(input2.value).toLowerCase();
+    update_array_of_colors = update_array_of_colors.split(',');
+    
+    update_list_elements();
+    if(list_elements_array.length > 0){
+        old_color = String(input2.value).toLowerCase().split(',');
+        old_color = old_color[0];
+        
+        new_color = String(input2.value).toLowerCase().split(',');
+        new_color = new_color[1];
+        
+        input2.value = null;
+        
+        for(var i=0;i<list_elements_array.length;i++){
+            if(list_elements_array[i].style.backgroundColor === old_color){
+                list_elements_array[i].style.backgroundColor = new_color;
+                 list_elements_array[i].textContent = new_color;
+ 
+    }
+} 
+    update_list_elements();
+    }
+}
+
 function delete_color(){
     update_list_elements();
     if (Number(input3.value) >-1 ){
-        ol.children[Number(input3.value)-1].remove()
+        ol.children[Number(input3.value)-1].remove();
     }
     for (var i=0;i<list_elements.length;i++){
         if (list_elements[i].textContent.toLowerCase() == input3.value.toLowerCase()){
@@ -66,13 +114,7 @@ function delete_color(){
     }
 
 }
-    // button1.addEventListener('click',function(){
-    //    input1.value = active_li.children[1].innerHTML;
-    // });
 
-    // button2.addEventListener('click',function(){
-    //     active_li.children[1].innerHTML = input2.value;
-    // });
     function create(new_element,where_to_append){
     new_item = document.createElement(new_element);
     where_to_append.appendChild(new_item);
@@ -188,6 +230,15 @@ document.addEventListener('DOMContentLoaded',function(){
                          document.getElementById('button3').click();
                 	}
          	})
+        document.getElementById('button1').addEventListener('click',function(){
+        read_code();
+
+    });
+
+        document.getElementById('button2').addEventListener('click',function(){
+        update_code();
+
+    });
     
 
 });

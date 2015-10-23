@@ -1,0 +1,25 @@
+* {
+    box-sizing:border-box;
+}
+body{
+    text-align:center;
+}
+input, button{
+    width:140px;
+    margin:5px;
+}
+li{
+    height:25px;
+    margin:2px;
+    border:2px solid black;
+    border-radius:3px;
+    padding:2px;
+
+}
+    li:hover{
+    border:2px solid red;
+}
+ol{
+    width:800px;
+    margin:0 auto;
+}
